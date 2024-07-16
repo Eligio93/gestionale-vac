@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const machineSchema = new Schema({
     motor: { type: String },
-    serial: { type: String },
+    serialNumber: { type: String },
+    inUse:{type:Boolean},
     therapies: [{ type: Schema.Types.ObjectId, ref: 'Therapy' }]
 })
 
