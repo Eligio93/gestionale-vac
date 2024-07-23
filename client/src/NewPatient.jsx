@@ -17,7 +17,9 @@ export default function NewPatient() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setLoading(true);
         try {
+
             const result = await axios.post('http://localhost:3001/patients/newPatient', data)
             navigate('/');
         } catch (err) {
