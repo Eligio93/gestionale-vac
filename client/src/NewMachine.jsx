@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function NewMachine() {
@@ -8,13 +9,15 @@ export default function NewMachine() {
         machineMotor: 'vaculta',
         serialNumber: ''
     });
+    const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true)
         try {
             const result = await axios.post('http://localhost:3001/machines/newMachine', data)
-            console.log(result)
+            navigate('/');
+
         } catch (err) {
             console.log(err)
             setMessage(err.response.data.message)
@@ -22,10 +25,6 @@ export default function NewMachine() {
             setLoading(false)
         }
 
-    }
-
-    function handleChange(e) {
-        setUtenteMacchina(e.target.value);
     }
 
     function handleDataChange(e) {
@@ -42,8 +41,8 @@ export default function NewMachine() {
     return (
 
         
-        <form onSubmit={handleSubmit} className="newMachine-form" >
-            <h2>Informazioni Macchina</h2>
+        <form onSubmit={handleSubmit} className="newMachine-form form" >
+            <h2>Aggiungi Nuova Macchina</h2>
             {message && <p className="error-msg">{message}</p>}
             <label htmlFor="reg-motoreMacchina">Motore Macchina</label>
             <select
@@ -63,7 +62,7 @@ export default function NewMachine() {
                 value={data.serialNumber}
                 onChange={handleDataChange}
             />
-            <button type="submit">Registra Macchina</button>
+            <button type="submit" className="green-btn">Registra Macchina</button>
         </form>
     );
 }
