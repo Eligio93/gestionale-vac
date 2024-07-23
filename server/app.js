@@ -3,7 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose')
-const cors= require('cors')
+const cors = require('cors')
 require('dotenv').config()
 
 
@@ -20,7 +20,8 @@ async function main() {
 
 const indexRouter = require('./routes/index');
 const patientsRouter = require('./routes/patients');
-const machineRouter = require('./routes/machine')
+const machineRouter = require('./routes/machine');
+const hospitalRouter = require('./routes/hospitals')
 
 
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/patients', patientsRouter);
-app.use('/machines',machineRouter)
+app.use('/machines', machineRouter);
+app.use('/hospitals', hospitalRouter);
 
 module.exports = app;
