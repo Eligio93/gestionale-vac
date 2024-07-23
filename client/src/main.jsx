@@ -5,6 +5,9 @@ import Layout from './Layout.jsx'
 import Home from './Home.jsx'
 import NewMachine from './NewMachine.jsx'
 import './index.css'
+import NewPatient from './NewPatient.jsx'
+import NewHospital from './NewHospital.jsx'
+import NewTherapy from './NewTherapy.jsx'
 
 //defines router and routes
 const router = createBrowserRouter([
@@ -19,6 +22,18 @@ const router = createBrowserRouter([
       {
         path:'/nuovaMacchina',
         element:<NewMachine />
+      },
+      {
+        path:'/nuovoPaziente',
+        element:<NewPatient />
+      },
+      {
+        path:'/nuovoOspedale',
+        element:<NewHospital />
+      },
+      {
+        path:'/nuovaTerapia',
+        element:<NewTherapy />
       }
     ]
   }
