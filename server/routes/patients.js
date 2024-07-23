@@ -3,7 +3,7 @@ const router = express.Router();
 const Patient = require('../schemas/Patient')
 
 router.post('/newPatient',async(req,res,next)=>{
-    const existingPatient = Patient.find({
+    const existingPatient = await Patient.findOne({
         name:req.body.name.toUpperCase(), 
         lastName:req.body.lastName.toUpperCase(),
         city:req.body.city.toUpperCase(),
