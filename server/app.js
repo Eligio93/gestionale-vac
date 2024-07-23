@@ -19,7 +19,7 @@ async function main() {
 ///---------------------------///
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const patientsRouter = require('./routes/patients');
 const machineRouter = require('./routes/machine')
 
 
@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/patients', patientsRouter);
 app.use('/machines',machineRouter)
 
 module.exports = app;
