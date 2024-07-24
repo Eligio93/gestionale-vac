@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Machine = require('../schemas/Machine')
 
+/*GET ALL MACHINES*/
+router.get('/',async (req,res,next)=>{
+    const machines = await Machine.find({})
+    return res.json({machines})
+})
+
+/*CREATE A NEW MACHINE*/
 router.post('/newMachine', async function (req, res) {
     try {
         const existingMachine = await Machine.findOne({ serialNumber: req.body.serialNumber, motor:req.body.machineMotor })

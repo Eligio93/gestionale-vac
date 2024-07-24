@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Patient = require('../schemas/Patient')
 
+//GET ALL PATIENTS
+router.get('/',async (req,res,next)=>{
+    const patients = await Patient.find({});
+    return res.json({patients})
+})
+
+
+
+//ADD NEW PATIENT
 router.post('/newPatient',async(req,res,next)=>{
     const existingPatient = await Patient.findOne({
         name:req.body.name.toUpperCase(), 
