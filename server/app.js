@@ -22,6 +22,7 @@ const indexRouter = require('./routes/index');
 const patientsRouter = require('./routes/patients');
 const machineRouter = require('./routes/machine');
 const hospitalRouter = require('./routes/hospitals')
+const therapyRouter = require('./routes/therapies')
 
 
 
@@ -38,5 +39,6 @@ app.use('/', indexRouter);
 app.use('/patients', patientsRouter);
 app.use('/machines', machineRouter);
 app.use('/hospitals', hospitalRouter);
+app.use('/therapies', therapyRouter);
 
 module.exports = app;
