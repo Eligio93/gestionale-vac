@@ -2,12 +2,13 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useContext } from "react";
 import { DataContext } from "./components/DataContext";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function NewTherapy() {
     //use Context to import data
-    const { patientsList, setPatientsList, hospitalsList, setHospitalsList, machinesList, setMachinesList } = useContext(DataContext)
+    const { patientsList, setPatientsList, hospitalsList, setHospitalsList, machinesList, setMachinesList, reloadData} = useContext(DataContext)
     const [filteredPatient, setFilteredPatient] = useState([]);
     const [filteredHospital, setFilteredHospital] = useState();
     const [filteredMachine, setFilteredMachine] = useState();
@@ -15,10 +16,12 @@ export default function NewTherapy() {
     const [machineError, setMachineError] = useState()
     const [error, setError] = useState()
     const [data, setData] = useState({
+        patientId:'',
         patientName: '',
         patientLastName: '',
         patientCity: '',
         patientPhone: '',
+        hospitalId:'',
         hospitalName: '',
         hospitalCity: '',
         refererName: '',
@@ -32,6 +35,7 @@ export default function NewTherapy() {
     })
     const [destination, setDestination] = useState()
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
 
     //Search in patients or hospital list if there s any match with typing
@@ -87,6 +91,7 @@ export default function NewTherapy() {
                 setPatientError()
                 setData((prevData) => ({
                     ...prevData,
+                    patientId:selectedPatient._id,
                     patientName: selectedPatient.name,
                     patientLastName: selectedPatient.lastName,
                     patientCity: selectedPatient.city,
@@ -99,6 +104,7 @@ export default function NewTherapy() {
             const selectedHospital = value.hospital;
             setData((prevData) => ({
                 ...prevData,
+                hospitalId:selectedHospital._id,
                 hospitalName: selectedHospital.name,
                 hospitalCity: selectedHospital.city
             }))
@@ -125,12 +131,16 @@ export default function NewTherapy() {
         setDestination(e.target.value)
     }
     //handle Submit
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true)
         try {
-            const response = axios.post('http://localhost:3001/therapies/newTherapy', { data, destination })
-
+            const response = await axios.post('http://localhost:3001/therapies/newTherapy', { data, destination })
+            if(response.status== 200){
+                console.log(response)
+                reloadData();
+                navigate('/');
+            }
         } catch (err) {
 
         } finally {
