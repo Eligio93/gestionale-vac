@@ -25,7 +25,8 @@ router.post('/newPatient',async(req,res,next)=>{
             name:req.body.name.toUpperCase(),
             lastName:req.body.lastName.toUpperCase(),
             phone:req.body.phone,
-            city:req.body.city.toUpperCase()
+            city:req.body.city.toUpperCase(),
+            inTherapy:false
         })
         await patient.save()
         return res.json({message:'Paziente Creato Correttamente'})
