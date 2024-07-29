@@ -6,6 +6,7 @@ const patientSchema = new Schema({
     lastName: { type: String },
     city: { type: String },
     phone: { type: String },
+    inTherapy:{type:Boolean},
     therapies:[{type:Schema.Types.ObjectId,ref:'Therapy'}]
 })
 
