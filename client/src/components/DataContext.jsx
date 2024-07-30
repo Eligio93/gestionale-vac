@@ -8,11 +8,13 @@ export const DataProvider = ({ children }) => {
     const [patientsList, setPatientsList] = useState([]);
     const [hospitalsList, setHospitalsList] = useState([]);
     const [machinesList, setMachinesList] = useState([]);
+    const [therapiesList, setTherapiesList] = useState([])
 
     const apiEndpoints = [
-        { url: 'http://localhost:3001/patients', setter: setPatientsList,name:'patients' },
-        { url: 'http://localhost:3001/hospitals', setter: setHospitalsList,name:'hospitals'},
-        { url: 'http://localhost:3001/machines', setter: setMachinesList, name:'machines'},
+        { url: 'http://localhost:3001/patients', setter: setPatientsList, name: 'patients' },
+        { url: 'http://localhost:3001/hospitals', setter: setHospitalsList, name: 'hospitals' },
+        { url: 'http://localhost:3001/machines', setter: setMachinesList, name: 'machines' },
+        { url: 'http://localhost:3001/therapies', setter: setTherapiesList, name: 'therapies' }
     ]
 
     const fetchData = async () => {
@@ -32,7 +34,7 @@ export const DataProvider = ({ children }) => {
         fetchData();
     }, [])
 
-    async function reloadData(){
+    async function reloadData() {
         await fetchData();
     }
 
@@ -42,6 +44,7 @@ export const DataProvider = ({ children }) => {
             patientsList, setPatientsList,
             hospitalsList, setHospitalsList,
             machinesList, setMachinesList,
+            therapiesList, setTherapiesList,
             reloadData
         }}>
             {children}
