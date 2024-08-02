@@ -5,10 +5,11 @@ import axios from "axios";
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-    const [patientsList, setPatientsList] = useState([]);
-    const [hospitalsList, setHospitalsList] = useState([]);
-    const [machinesList, setMachinesList] = useState([]);
-    const [therapiesList, setTherapiesList] = useState([])
+    const [patientsList, setPatientsList] = useState();
+    const [hospitalsList, setHospitalsList] = useState();
+    const [machinesList, setMachinesList] = useState();
+    const [therapiesList, setTherapiesList] = useState();
+    const [loading,setLoading] = useState(true);
 
     const apiEndpoints = [
         { url: 'http://localhost:3001/patients', setter: setPatientsList, name: 'patients' },
@@ -28,7 +29,10 @@ export const DataProvider = ({ children }) => {
         } catch (err) {
             console.log(err)
 
+        }finally{
+            setLoading(false)
         }
+
     }
     useEffect(() => {
         fetchData();
@@ -38,14 +42,13 @@ export const DataProvider = ({ children }) => {
         await fetchData();
     }
 
-
     return (
         <DataContext.Provider value={{
             patientsList, setPatientsList,
             hospitalsList, setHospitalsList,
             machinesList, setMachinesList,
             therapiesList, setTherapiesList,
-            reloadData
+            reloadData,loading,setLoading
         }}>
             {children}
         </DataContext.Provider>
