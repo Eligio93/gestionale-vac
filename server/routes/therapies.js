@@ -8,10 +8,17 @@ const Machine = require('../schemas/Machine')
 
 router.get('/', async (req, res, next) => {
     const therapies = await Therapy.find({})
-    .populate('patient')
-    .populate('machine')
-    .populate('hospital')
+        .populate('patient')
+        .populate('machine')
+        .populate('hospital')
     return res.json({ therapies })
+})
+
+//EDIT THERAPY
+router.put('/edit/:therapyId', async (req, res, next) => {
+    const therapyId = req.params.therapyId
+    console.log(therapyId)
+    console.log(req.body)
 })
 
 
