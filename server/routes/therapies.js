@@ -17,8 +17,26 @@ router.get('/', async (req, res, next) => {
 //EDIT THERAPY
 router.put('/edit/:therapyId', async (req, res, next) => {
     const therapyId = req.params.therapyId
-    console.log(therapyId)
-    console.log(req.body)
+    const newStartDate = new Date(req.body.therapyStartDate);
+    const newEndDate = new Date(req.body.therapyEndDate);
+    const newNotes = req.body.therapyNotes;
+
+    try {
+        const therapy = await Therapy.findOneAndUpdate(
+            { _id: therapyId },
+            {
+                $set: {
+                    startDate: newStartDate,
+                    endDate: newEndDate,
+                    notes: newNotes
+                }
+            },
+            { new: true }
+        )
+        return res.json('Terapia modificata con successo')
+    } catch (err) {
+        res.status(500).json({message:'Errore nella modifica della terapia'})
+    }
 })
 
 
