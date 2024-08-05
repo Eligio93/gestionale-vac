@@ -1,9 +1,13 @@
 import { format } from "date-fns"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { DataContext } from "./DataContext";
 
 
-export default function ListEndedTherapies({ therapy }) {
+export default function EndedTherapy({ therapy, setSuccessMessage, setErrorMessage }) {
+    const navigate = useNavigate()
+    const { reloadData } = useContext(DataContext)
     const [therapyToEdit, setTherapyToEdit] = useState();
     const [data, setData] = useState({
         therapyStartDate: format(therapy.startDate, 'yyyy-MM-dd'),
@@ -29,9 +33,27 @@ export default function ListEndedTherapies({ therapy }) {
     async function handleEditSave(therapyId) {
         try {
             const response = await axios.put(`http://localhost:3001/therapies/edit/${therapyId}`, data)
-            console.log(response)
+            if (response.status == 200) {
+                //reload Data
+                reloadData();
+                //update success message
+                setSuccessMessage(response.data)
+                //the message shows for 2 sec
+                setTimeout(() => {
+                    setSuccessMessage()
+                }, 2000)
+                //return to viewOnly mode
+                setTherapyToEdit();
+            }
         } catch (err) {
-            console.log(err)
+            //the message displayed will be : "Errore nella modifica della terapia"
+            setErrorMessage(err.response.data.message)
+            //the error message will display for 2 sec
+            setTimeout(() => {
+                setErrorMessage()
+            }, 2000)
+            //return to viewOnly mode
+            setTherapyToEdit();
         }
 
     }
@@ -42,8 +64,8 @@ export default function ListEndedTherapies({ therapy }) {
             ...prevData, [name]: value
 
         }))
-        console.log(data)
     }
+
     return (
         <li className="listed-ended-therapy">
             <div className="info-date">
