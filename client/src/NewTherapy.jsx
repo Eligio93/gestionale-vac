@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useContext } from "react";
 import { DataContext } from "./components/DataContext";
 import { useNavigate } from "react-router-dom";
+import SearchResults from "./components/SearchResults";
 
 
 
@@ -180,25 +181,7 @@ export default function NewTherapy() {
                     <input type="text" name="patientName" value={data.patientName} onChange={handleSearch} />
                     <label htmlFor="">Cognome Paziente</label>
                     <input type="text" name='patientLastName' value={data.patientLastName} onChange={handleSearch} />
-                    <div>
-                        {filteredPatient && filteredPatient.length > 0 ? (
-                            <ul>
-                                {filteredPatient.map((patient) =>
-                                    <li key={patient._id}>
-                                        <div onClick={() => handleSelection({ patient: patient })}>
-                                            <p>{patient.name + ' ' + patient.lastName}</p>
-                                            <p>{'di ' + patient.city}</p>
-                                        </div>
-
-                                    </li>
-
-                                )}
-
-                            </ul>
-
-
-                        ) : (null)}
-                    </div>
+                    <SearchResults filteredPatient ={filteredPatient} handleSelection = {handleSelection} />
                     <label htmlFor="">Citta Paziente</label>
                     <input type="text" value={data.patientCity} disabled />
                     <label htmlFor="">Telefono Paziente</label>
@@ -209,26 +192,7 @@ export default function NewTherapy() {
                     <h3>Informazioni Ospedale</h3>
                     <label>Nome Ospedale:</label>
                     <input type="text" name='hospitalName' value={data.hospitalName} onChange={handleSearch} />
-                    <div>
-                        {filteredHospital && filteredHospital.length > 0 ? (
-                            <ul>
-                                {filteredHospital.map((hospital) =>
-                                    <li key={hospital._id}>
-                                        <div onClick={() => handleSelection({ hospital: hospital })}>
-                                            <p>{hospital.name}</p>
-                                            <p>{'di ' + hospital.city}</p>
-                                        </div>
-
-                                    </li>
-
-                                )}
-
-                            </ul>
-
-
-                        ) : (null)}
-
-                    </div>
+                    <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection}/>
                     <label>Citta:</label>
                     <input type="text" name='hospitaCity' value={data.hospitalCity} disabled />
 
@@ -251,20 +215,7 @@ export default function NewTherapy() {
             {machineError && <p className="error-msg">{machineError}</p>}
             <label>Seriale Macchina:</label>
             <input type="text" name="machineSerial" value={data.machineSerial} onChange={handleSearch} />
-            <div>
-                {filteredMachine && filteredMachine.length > 0 ? (
-                    <ul>
-                        {filteredMachine.map((machine) =>
-                            <li key={machine._id}>
-                                <div onClick={() => handleSelection({ machine: machine })}>
-                                    <p>{machine.serialNumber}</p>
-                                    <p>{machine.motor}</p>
-                                </div>
-                            </li>
-                        )}
-                    </ul>
-                ) : (null)}
-            </div>
+            <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
             <label>Motore Macchina</label>
             <input type="text" name="machineMotor" value={data.machineMotor} disabled />
 
