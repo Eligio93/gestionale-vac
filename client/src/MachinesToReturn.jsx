@@ -6,10 +6,12 @@ import { useState } from "react"
 
 
 
+
 export default function MachinesToReturn() {
     const { therapiesList, loading } = useContext(DataContext)
     const [successMessage, setSuccessMessage] = useState()
-    const [errorMessage,setErrorMessage]= useState()
+    const [errorMessage, setErrorMessage] = useState()
+
     if (loading) {
         return <p>Loading...</p>
     }
@@ -18,22 +20,23 @@ export default function MachinesToReturn() {
     if (successMessage) {
         return <p className="success-msg">{successMessage}</p>
     }
-    if(errorMessage){
+    if (errorMessage) {
         return <p className="error-msg">{errorMessage}</p>
     }
-
     return (
         <>
-            <ul className="ended-therapies-list">
+            {finishedTherapies.length < 1 && <p>Non ci sono macchine da ritirare</p>}
+            {finishedTherapies.length > 0 && <ul className="ended-therapies-list">
                 {finishedTherapies.map((therapy) =>
                     <EndedTherapy
                         key={therapy._id}
                         therapy={therapy}
                         successMessage={successMessage}
                         setSuccessMessage={setSuccessMessage}
-                        setErrorMessage = {setErrorMessage}
+                        setErrorMessage={setErrorMessage}
                     />)}
-            </ul>
+            </ul>}
+
         </>
 
     )
