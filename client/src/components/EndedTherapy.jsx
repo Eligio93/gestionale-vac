@@ -1,12 +1,12 @@
 import { format } from "date-fns"
 import { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { DataContext } from "./DataContext";
+import Popup from "./Popup";
+
 
 
 export default function EndedTherapy({ therapy, setSuccessMessage, setErrorMessage }) {
-    const navigate = useNavigate()
     const { reloadData } = useContext(DataContext)
     const [therapyToEdit, setTherapyToEdit] = useState();
     const [data, setData] = useState({
@@ -14,6 +14,7 @@ export default function EndedTherapy({ therapy, setSuccessMessage, setErrorMessa
         therapyEndDate: format(therapy.endDate, 'yyyy-MM-dd'),
         therapyNotes: therapy.notes
     })
+    const [activePopUp, setActivePopUp] = useState(false)
     //function that enables input ready for the edit
     function handleEdit(e, therapyId) {
         e.preventDefault();
@@ -66,43 +67,55 @@ export default function EndedTherapy({ therapy, setSuccessMessage, setErrorMessa
         }))
     }
 
+
     return (
-        <li className="listed-ended-therapy">
-            <div className="info-date">
-                <p>Terapia iniziata il <input type="date" name="therapyStartDate" value={data.therapyStartDate} disabled={therapyToEdit !== therapy._id} onChange={onChange} /> e terminata il <input type="date" name="therapyEndDate" value={data.therapyEndDate} disabled={therapyToEdit !== therapy._id} onChange={onChange} /></p>
-            </div>
-            <div className="info-macchina">
-                <p>Macchina: {therapy.machine.motor + ' ' + therapy.machine.serialNumber}</p>
-            </div>
-            <p>Assegnata a:</p>
-            {therapy.patient ? (
-                <div className="info-paziente">
-                    <p>{therapy.patient.name + ' ' + therapy.patient.lastName + ' di ' + therapy.patient.city + ' TEL: ' + therapy.patient.phone}</p>
+        <>
+            <li className="listed-ended-therapy">
+                <div className="info-date">
+                    <p>Terapia iniziata il <input type="date" name="therapyStartDate" value={data.therapyStartDate} disabled={therapyToEdit !== therapy._id} onChange={onChange} /> e terminata il <input type="date" name="therapyEndDate" value={data.therapyEndDate} disabled={therapyToEdit !== therapy._id} onChange={onChange} /></p>
                 </div>
-            ) : (
-                <div className="info-ospedale">
-                    <p>Ospedale:</p>
-                    <p>{therapy.hospital.name}</p>
+                <div className="info-macchina">
+                    <p>Macchina: {therapy.machine.motor + ' ' + therapy.machine.serialNumber}</p>
                 </div>
-
-            )}
-            <p>Note:</p>
-            <textarea value={data.therapyNotes} disabled={therapyToEdit !== therapy._id} name="therapyNotes" onChange={onChange}></textarea>
-            <div className="btns-nav">
-                {therapyToEdit == therapy._id ? (
-                    <>
-                        <button onClick={cancelEdit}>Annulla</button>
-                        <button onClick={() => handleEditSave(therapy._id)}>Salva Modifiche</button>
-                    </>
-
+                <p>Assegnata a:</p>
+                {therapy.patient ? (
+                    <div className="info-paziente">
+                        <p>{therapy.patient.name + ' ' + therapy.patient.lastName + ' di ' + therapy.patient.city + ' TEL: ' + therapy.patient.phone}</p>
+                    </div>
                 ) : (
-                    <>
-                        <button>Ritira</button>
-                        <button onClick={(e) => handleEdit(e, therapy._id)}>Modifica</button>
-                    </>
+                    <div className="info-ospedale">
+                        <p>Ospedale:</p>
+                        <p>{therapy.hospital.name}</p>
+                    </div>
+
                 )}
-            </div>
-        </li>
+                <p>Note:</p>
+                <textarea value={data.therapyNotes} disabled={therapyToEdit !== therapy._id} name="therapyNotes" onChange={onChange}></textarea>
+                <div className="btns-nav">
+                    {therapyToEdit == therapy._id ? (
+                        <>
+                            <button onClick={cancelEdit}>Annulla</button>
+                            <button onClick={() => handleEditSave(therapy._id)}>Salva Modifiche</button>
+                        </>
+
+                    ) : (
+                        <>
+                            <button onClick={() => { setActivePopUp(true) }}>Ritira</button>
+                            <button onClick={(e) => handleEdit(e, therapy._id)}>Modifica</button>
+                        </>
+                    )}
+                </div>
+            </li>
+            {activePopUp &&
+                //confirmation popUp
+                <Popup
+                    therapy={therapy}
+                    title={'Sei sicuro/a di voler ritirare la seguente macchina?'}
+                    setActivePopUp={setActivePopUp}
+                />
+            }
+        </>
+
     )
 }
 
