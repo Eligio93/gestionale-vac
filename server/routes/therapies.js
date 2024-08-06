@@ -87,7 +87,7 @@ router.post('/newTherapy', async (req, res, next) => {
             }
         }
 
-        const machine = await Machine.findOne({ serialNumber: data.machineSerial })
+        const machine = await Machine.findOne({ serialNumber: data.machineSerial, motor:data.machineMotor })
         if (machine) {
             therapy.machine = machine._id;
             machine.therapies.push(therapy._id)
