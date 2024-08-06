@@ -112,6 +112,8 @@ export default function EndedTherapy({ therapy, setSuccessMessage, setErrorMessa
                     therapy={therapy}
                     title={'Sei sicuro/a di voler ritirare la seguente macchina?'}
                     setActivePopUp={setActivePopUp}
+                    setSuccessMessage = {setSuccessMessage}
+                    setErrorMessage = {setErrorMessage}
                 />
             }
         </>
