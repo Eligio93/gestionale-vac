@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { DataContext } from "./components/DataContext";
 
 export default function NewMachine() {
+    const {reloadData} = useContext(DataContext)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [data, setData] = useState({
@@ -16,6 +18,7 @@ export default function NewMachine() {
         setLoading(true)
         try {
             const result = await axios.post('http://localhost:3001/machines/newMachine', data)
+            reloadData()
             navigate('/');
 
         } catch (err) {

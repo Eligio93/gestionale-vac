@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { DataContext } from "./components/DataContext";
 
 
 export default function NewPatient() {
+    const{reloadData}= useContext(DataContext)
     const [data, setData] = useState({
         name: '',
         lastName: '',
@@ -19,8 +21,8 @@ export default function NewPatient() {
         e.preventDefault();
         setLoading(true);
         try {
-
             const result = await axios.post('http://localhost:3001/patients/newPatient', data)
+            reloadData()
             navigate('/');
         } catch (err) {
             console.log(err)

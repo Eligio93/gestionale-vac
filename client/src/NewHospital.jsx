@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { DataContext } from "./components/DataContext";
 
 
 export default function NewHospital() {
+    const {reloadData}= useContext(DataContext)
     const [data, setData] = useState({
         name: '',
         city: ''
@@ -25,6 +27,7 @@ export default function NewHospital() {
         setLoading(true);
         try {
             const result = await axios.post('http://localhost:3001/hospitals/newHospital', data)
+            reloadData();
             navigate('/');
         } catch (err) {
             console.log(err)
