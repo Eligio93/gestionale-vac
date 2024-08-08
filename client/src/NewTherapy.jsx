@@ -9,20 +9,20 @@ import SearchResults from "./components/SearchResults";
 
 export default function NewTherapy() {
     //use Context to import data
-    const { patientsList, setPatientsList, hospitalsList, setHospitalsList, machinesList, setMachinesList, reloadData} = useContext(DataContext)
+    const { patientsList, setPatientsList, hospitalsList, setHospitalsList, machinesList, setMachinesList, reloadData } = useContext(DataContext)
     const [filteredPatient, setFilteredPatient] = useState([]);
-    const [filteredHospital, setFilteredHospital] = useState();
-    const [filteredMachine, setFilteredMachine] = useState();
+    const [filteredHospital, setFilteredHospital] = useState([]);
+    const [filteredMachine, setFilteredMachine] = useState([]);
     const [patientError, setPatientError] = useState();
     const [machineError, setMachineError] = useState()
     const [error, setError] = useState()
     const [data, setData] = useState({
-        patientId:'',
+        patientId: '',
         patientName: '',
         patientLastName: '',
         patientCity: '',
         patientPhone: '',
-        hospitalId:'',
+        hospitalId: '',
         hospitalName: '',
         hospitalCity: '',
         refererName: '',
@@ -48,7 +48,7 @@ export default function NewTherapy() {
         if (value === '') {
             setFilteredPatient([]);
             setFilteredHospital([]);
-            setFilteredMachine()
+            setFilteredMachine([])
         } else {
             if (name == 'patientName' || name == 'patientLastName') {
                 setFilteredPatient(patientsList.filter((patient) => {
@@ -92,7 +92,7 @@ export default function NewTherapy() {
                 setPatientError()
                 setData((prevData) => ({
                     ...prevData,
-                    patientId:selectedPatient._id,
+                    patientId: selectedPatient._id,
                     patientName: selectedPatient.name,
                     patientLastName: selectedPatient.lastName,
                     patientCity: selectedPatient.city,
@@ -105,7 +105,7 @@ export default function NewTherapy() {
             const selectedHospital = value.hospital;
             setData((prevData) => ({
                 ...prevData,
-                hospitalId:selectedHospital._id,
+                hospitalId: selectedHospital._id,
                 hospitalName: selectedHospital.name,
                 hospitalCity: selectedHospital.city
             }))
@@ -123,7 +123,7 @@ export default function NewTherapy() {
                     machineMotor: selectedMachine.motor
                 }))
             }
-            setFilteredMachine();
+            setFilteredMachine([]);
         }
     }
 
@@ -137,7 +137,7 @@ export default function NewTherapy() {
         setLoading(true)
         try {
             const response = await axios.post('http://localhost:3001/therapies/newTherapy', { data, destination })
-            if(response.status== 200){
+            if (response.status == 200) {
                 console.log(response)
                 reloadData();
                 navigate('/');
@@ -177,11 +177,15 @@ export default function NewTherapy() {
                 <div className="info-tab info-paziente form">
                     <h3>Info Paziente</h3>
                     {patientError && <p className="error-msg">{patientError}</p>}
-                    <label htmlFor="">Nome Paziente</label>
-                    <input type="text" name="patientName" value={data.patientName} onChange={handleSearch} />
-                    <label htmlFor="">Cognome Paziente</label>
-                    <input type="text" name='patientLastName' value={data.patientLastName} onChange={handleSearch} />
-                    <SearchResults filteredPatient ={filteredPatient} handleSelection = {handleSelection} />
+                    <div className="search-params">
+                        <label htmlFor="">Nome Paziente</label>
+                        <input type="text" name="patientName" value={data.patientName} onChange={handleSearch} />
+                        <label htmlFor="">Cognome Paziente</label>
+                        <input type="text" name='patientLastName' value={data.patientLastName} onChange={handleSearch} />
+                        <ul className={`search-results ${filteredPatient.length == 0 && 'hidden'}`}>
+                            <SearchResults filteredPatient={filteredPatient} handleSelection={handleSelection} />
+                        </ul>
+                    </div>
                     <label htmlFor="">Citta Paziente</label>
                     <input type="text" value={data.patientCity} disabled />
                     <label htmlFor="">Telefono Paziente</label>
@@ -190,9 +194,13 @@ export default function NewTherapy() {
             ) : (destination == 'hospital' ? (
                 <div className="info-tab info-ospedale form">
                     <h3>Informazioni Ospedale</h3>
-                    <label>Nome Ospedale:</label>
-                    <input type="text" name='hospitalName' value={data.hospitalName} onChange={handleSearch} />
-                    <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection}/>
+                    <div className="search-params">
+                        <label>Nome Ospedale:</label>
+                        <input type="text" name='hospitalName' value={data.hospitalName} onChange={handleSearch} />
+                        <ul className={`search-results ${filteredHospital.length == 0 && 'hidden'}`}>
+                            <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection} />
+                        </ul>
+                    </div>
                     <label>Citta:</label>
                     <input type="text" name='hospitaCity' value={data.hospitalCity} disabled />
 
@@ -213,9 +221,13 @@ export default function NewTherapy() {
             }
             <h3>Info Macchina</h3>
             {machineError && <p className="error-msg">{machineError}</p>}
-            <label>Seriale Macchina:</label>
-            <input type="text" name="machineSerial" value={data.machineSerial} onChange={handleSearch} />
-            <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
+            <div className="search-params">
+                <label>Seriale Macchina:</label>
+                <input type="text" name="machineSerial" value={data.machineSerial} onChange={handleSearch} />
+                <ul className={`search-results ${filteredMachine.length == 0 && 'hidden'}`}>
+                    <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
+                </ul>
+            </div>
             <label>Motore Macchina</label>
             <input type="text" name="machineMotor" value={data.machineMotor} disabled />
 
