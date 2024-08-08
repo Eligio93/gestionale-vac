@@ -5,33 +5,39 @@ export default function SearchResults(props) {
     const handleSelection = props.handleSelection
 
     return (
-        <ul className="search-results">
+        <>
             {filteredPatient && filteredPatient.length > 0 && filteredPatient.map((patient) =>
-                <li key={patient._id}>
-                    <div onClick={() => handleSelection({ patient: patient })}>
-                        <p>{patient.name + ' ' + patient.lastName}</p>
-                        <p>{'di ' + patient.city}</p>
+                <li key={patient._id} className="listed-result">
+                    <div className="object-info" onClick={() => handleSelection({ patient: patient })}>
+                        <p>{patient.name + ' ' + patient.lastName + ' di ' + patient.city}</p>
+                    </div>
+                    <div className="category-info">
+                        <p>in Pazienti</p>
                     </div>
 
                 </li>
             )}
             {filteredHospital && filteredHospital.length > 0 && filteredHospital.map((hospital) =>
-                <li key={hospital._id}>
-                    <div onClick={() => handleSelection({ hospital: hospital })}>
-                        <p>{hospital.name}</p>
-                        <p>{'di ' + hospital.city}</p>
+                <li key={hospital._id} className="listed-result">
+                    <div className="object-info" onClick={() => handleSelection({ hospital: hospital })}>
+                        <p>{hospital.name + ' di ' + hospital.city}</p>
+                    </div>
+                    <div className="category-info">
+                        <p>in Ospedali</p>
                     </div>
                 </li>
             )}
             {filteredMachine && filteredMachine.length > 0 && filteredMachine.map((machine) =>
-                <li key={machine._id}>
-                    <div onClick={() => handleSelection({ machine: machine })}>
-                        <p>{machine.serialNumber}</p>
-                        <p>{machine.motor}</p>
+                <li key={machine._id} className="listed-result">
+                    <div className='object-info' onClick={() => handleSelection({ machine: machine })}>
+                        <p>{machine.serialNumber + ' ' + machine.motor}</p>
+                    </div>
+                    <div className="category-info">
+                        <p>in Macchine</p>
                     </div>
                 </li>
             )}
-        </ul>
+        </>
 
     )
 
