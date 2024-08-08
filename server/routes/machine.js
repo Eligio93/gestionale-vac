@@ -8,6 +8,7 @@ const { default: mongoose } = require('mongoose');
 /*GET ALL MACHINES*/
 router.get('/', async (req, res, next) => {
     const machines = await Machine.find({})
+        .populate('therapies')
     return res.json({ machines })
 })
 
@@ -91,10 +92,10 @@ router.put('/return', async (req, res, next) => {
             //if there s an error the transaction gets aborted
             await session.abortTransaction()
             session.endSession();
-            return res.status(500).json({message:'Errore nel ritiro della macchina',error:err.message})
+            return res.status(500).json({ message: 'Errore nel ritiro della macchina', error: err.message })
         }
-    }else{
-        return res.status(500).json({message:'Errore nel ritiro della macchina, terapia non trovata'})
+    } else {
+        return res.status(500).json({ message: 'Errore nel ritiro della macchina, terapia non trovata' })
     }
 })
 
