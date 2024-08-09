@@ -6,13 +6,16 @@ import { DataContext } from "./DataContext"
 
 export default function ReturnConfirmationPopUp(props) {
     const { reloadData } = useContext(DataContext)
-    const machine = props.therapy.machine
-    const therapy = props.therapy
-    const patient = props.therapy.patient
+    const data = {
+        machine: props.machine,
+        therapy: props.therapy,
+        patient: props.patient,
+        hospital: props.hospital
+    }
 
     async function handleReturn() {
         try {
-            const response = await axios.put('http://localhost:3001/machines/return', therapy)
+            const response = await axios.put('http://localhost:3001/machines/return', data)
             console.log(response)
             if (response.status == 200) {
                 reloadData();
@@ -24,14 +27,14 @@ export default function ReturnConfirmationPopUp(props) {
                 }, 2000)
             }
 
-        } catch (err) { 
+        } catch (err) {
             console.log(err)
-              //the message displayed will be : "Errore nella modifica della terapia"
-              props.setErrorMessage(err.response.data.message)
-              //the error message will display for 2 sec
-              setTimeout(() => {
+            //the message displayed will be : "Errore nella modifica della terapia"
+            props.setErrorMessage(err.response.data.message)
+            //the error message will display for 2 sec
+            setTimeout(() => {
                 props.setErrorMessage()
-              }, 2000)
+            }, 2000)
         }
 
     }
@@ -40,11 +43,12 @@ export default function ReturnConfirmationPopUp(props) {
             <div className="popup-content">
                 <h3 className="popup-title">{props.title}</h3>
                 {/*in case the popup is to return the machine*/}
-                {machine && (
+                {data.machine && (
                     <div className="popup-machine">
-                        <p className="popup-seriale">Seriale : {machine.serialNumber}</p>
-                        <p className="popup-moto">Motore: {machine.motor}</p>
-                        <p className="popup-destination">Assegnata a: {patient.name + ' '+patient.lastName}</p>
+                        <p className="popup-seriale">Seriale : {data.machine.serialNumber}</p>
+                        <p className="popup-moto">Motore: {data.machine.motor}</p>
+                        {data.patient && <p className="popup-destination">Assegnata a: {data.patient.name + ' ' + data.patient.lastName}</p>}
+                        {data.hospital && <p className="popup-destination">Assegnata a: Ospedale {data.hospital.name}</p>}
                     </div>
                 )}
                 <div className="popup-btns">
