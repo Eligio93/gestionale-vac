@@ -1,8 +1,8 @@
 import { useContext } from "react"
 import { DataContext } from "./components/DataContext"
 import { isBefore } from 'date-fns'
-import EndedTherapy from "./components/EndedTherapy"
 import { useState } from "react"
+import TherapyToReturn from "./components/TherapyToReturn"
 
 
 
@@ -28,13 +28,16 @@ export default function MachinesToReturn() {
             {finishedTherapies.length < 1 && <p>Non ci sono macchine da ritirare</p>}
             {finishedTherapies.length > 0 && <ul className="ended-therapies-list">
                 {finishedTherapies.map((therapy) =>
-                    <EndedTherapy
+                    <TherapyToReturn
                         key={therapy._id}
                         therapy={therapy}
-                        successMessage={successMessage}
+                        machine={therapy.machine}
+                        patient={therapy.patient}
+                        hospital={therapy.hospital}
                         setSuccessMessage={setSuccessMessage}
                         setErrorMessage={setErrorMessage}
-                    />)}
+                    />
+                )}
             </ul>}
 
         </>
