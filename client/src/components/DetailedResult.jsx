@@ -22,16 +22,16 @@ export default function DetailedResult() {
             setMachine()
         }
         if (selectedResult.hospital && hospitalsList) {
-            const foundHospital = hospitalsList.find((hospital) => hospital._id === hospitalsList.hospital._id);
-            setPatient(foundHospital);
-            setHospital();
+            const foundHospital = hospitalsList.find((hospital) => hospital._id === selectedResult.hospital._id);
+            setPatient();
+            setHospital(foundHospital);
             setMachine()
         }
         if (selectedResult.machine && machinesList) {
             const foundMachine = machinesList.find((machine) => machine._id === selectedResult.machine._id);
-            setPatient(foundMachine);
+            setPatient();
             setHospital();
-            setMachine()
+            setMachine(foundMachine)
         }
     }, [selectedResult, patientsList, hospitalsList,machinesList, loading]); // Dipendenze
 
@@ -53,6 +53,39 @@ export default function DetailedResult() {
                 <h3>Scheda {patient.name + ' ' + patient.lastName}</h3>
                 <h4>Terapie in corso o con macchina da ritirare</h4>
                 {inTherapy && activeTherapies.length == 1 ? (
+                    <ul>
+                        < TherapyToReturn
+                            hospital={hospital}
+                            patient={patient}
+                            therapy={activeTherapies[0]}
+                            machine={activeTherapies[0].machine}
+                            todayDate={new Date()}
+                            setSuccessMessage={setSuccessMessage}
+                            setErrorMessage={setErrorMessage}
+                        />
+                    </ul>
+                ) : (<p>Non ci sono terapie in corso</p>)}
+                <h4>Storico Terapie</h4>
+                {therapyHistory && therapyHistory.length > 0 ? (
+                    <ul>
+                    {therapyHistory.map((therapy)=>{
+
+                    })}
+                    </ul>
+                ) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
+            </div>
+
+        )
+
+    }
+    if(hospital){
+        const activeTherapies = hospital.therapies.filter((therapy) => therapy.archived == false)
+        const therapyHistory = hospital.therapies.filter((therapy) => therapy.archived == true)
+        return (
+            <div className="detailed-result">
+                <h3>Scheda {hospital.name}</h3>
+                <h4>Terapie in corso o con macchina da ritirare</h4>
+                {activeTherapies.length > 0 ? (
                     <ul>
                         < TherapyToReturn
                             hospital={hospital}
