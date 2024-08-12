@@ -1,5 +1,5 @@
-import { format } from "date-fns"
-import { useContext, useState } from "react";
+import { format, isBefore } from "date-fns"
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { DataContext } from "./DataContext";
 import Popup from "./Popup";
@@ -16,6 +16,7 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
         therapyEndDate: format(therapy.endDate, 'yyyy-MM-dd'),
         therapyNotes: therapy.notes
     })
+    const today = new Date();
     const [activePopUp, setActivePopUp] = useState(false)
     //function that enables input ready for the edit
     function handleEdit(e, therapyId) {
@@ -37,8 +38,8 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
         try {
             const response = await axios.put(`http://localhost:3001/therapies/edit/${therapyId}`, data)
             if (response.status == 200) {
-                //reload Data
-                reloadData();
+
+
                 //update success message
                 setSuccessMessage(response.data)
                 //the message shows for 2 sec
@@ -47,6 +48,7 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
                 }, 2000)
                 //return to viewOnly mode
                 setTherapyToEdit();
+                reloadData();
             }
         } catch (err) {
             //the message displayed will be : "Errore nella modifica della terapia"
@@ -58,7 +60,6 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
             //return to viewOnly mode
             setTherapyToEdit();
         }
-
     }
 
     function onChange(e) {
@@ -87,7 +88,7 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
                             </div>
                         ) : (
                             <div className="info-ospedale">
-                                <p>Ospedale {therapy.hospital.name}</p>
+                                <p>Ospedale {therapy.hospital.name +' di '+therapy.hospital.city}</p>
                             </div>
 
                         )}
@@ -105,8 +106,7 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
 
                     ) : (
                         <>
-
-                            <button onClick={() => { setActivePopUp(true) }}>Ritira</button>
+                            {isBefore(data.therapyEndDate, today) && <button onClick={() => { setActivePopUp(true) }}>Ritira</button>}
                             <button onClick={(e) => handleEdit(e, therapy._id)}>Modifica</button>
                         </>
                     )}
