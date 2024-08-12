@@ -1,35 +1,43 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import EndedTherapy from "./EndedTherapy";
 import TherapyToReturn from "./TherapyToReturn";
+import { useContext } from "react";
+import { DataContext } from "./DataContext";
 
 export default function DetailedResult() {
     const location = useLocation()
+    const selectedResult = location.state
+    const { patientsList, hospitalsList,machinesList, loading } = useContext(DataContext)
     const [patient, setPatient] = useState()
     const [hospital, setHospital] = useState()
     const [machine, setMachine] = useState()
     const [successMessage, setSuccessMessage] = useState()
     const [errorMessage, setErrorMessage] = useState()
-    const selectedResult = location.state
-    useEffect(() => {
-        if (selectedResult.patient) {
-            setPatient(selectedResult.patient)
-            setHospital();
-            setMachine()
-        }
-        if (selectedResult.machine) {
-            setPatient();
-            setHospital();
-            setMachine(selectedResult.machine)
-        }
-        if (selectedResult.hospital) {
-            setPatient();
-            setHospital(selectedResult.hospital)
-            setMachine()
-        }
 
-    }, [selectedResult])
-    console.log(patient, hospital, machine)
+    useEffect(() => {
+        if (selectedResult.patient && patientsList) {
+            const foundPatient = patientsList.find((patient) => patient._id === selectedResult.patient._id);
+            setPatient(foundPatient);
+            setHospital();
+            setMachine()
+        }
+        if (selectedResult.hospital && hospitalsList) {
+            const foundHospital = hospitalsList.find((hospital) => hospital._id === hospitalsList.hospital._id);
+            setPatient(foundHospital);
+            setHospital();
+            setMachine()
+        }
+        if (selectedResult.machine && machinesList) {
+            const foundMachine = machinesList.find((machine) => machine._id === selectedResult.machine._id);
+            setPatient(foundMachine);
+            setHospital();
+            setMachine()
+        }
+    }, [selectedResult, patientsList, hospitalsList,machinesList, loading]); // Dipendenze
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
     if (successMessage) {
         return <p className="success-msg">{successMessage}</p>
     }
@@ -38,37 +46,38 @@ export default function DetailedResult() {
     }
     if (patient) {
         const inTherapy = patient.inTherapy
-        const activeTherapy = patient.therapies.filter((therapy) => therapy.archived == false)
+        const activeTherapies = patient.therapies.filter((therapy) => therapy.archived == false)
         const therapyHistory = patient.therapies.filter((therapy) => therapy.archived == true)
-        console.log(activeTherapy)
         return (
             <div className="detailed-result">
                 <h3>Scheda {patient.name + ' ' + patient.lastName}</h3>
                 <h4>Terapie in corso o con macchina da ritirare</h4>
-                {inTherapy && activeTherapy.length == 1 ? (
-                    <>
+                {inTherapy && activeTherapies.length == 1 ? (
+                    <ul>
                         < TherapyToReturn
-                            key={activeTherapy[0]._id}
                             hospital={hospital}
                             patient={patient}
-                            therapy={activeTherapy[0]}
-                            machine={activeTherapy[0].machine}
+                            therapy={activeTherapies[0]}
+                            machine={activeTherapies[0].machine}
                             todayDate={new Date()}
                             setSuccessMessage={setSuccessMessage}
                             setErrorMessage={setErrorMessage}
                         />
-                    </>
+                    </ul>
                 ) : (<p>Non ci sono terapie in corso</p>)}
                 <h4>Storico Terapie</h4>
-                {therapyHistory.length > 0 ? (<p>Ci sono terapie da mostrare</p>) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
+                {therapyHistory && therapyHistory.length > 0 ? (
+                    <ul>
+                    {therapyHistory.map((therapy)=>{
+
+                    })}
+                    </ul>
+                ) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
             </div>
+
         )
-    }
-    if (hospital) {
-        return <h1>{hospital.name} selezionato</h1>
-    }
-    if (machine) {
-        return <h1>{machine.serialNumber} selezionata</h1>
+
     }
 
 }
+
