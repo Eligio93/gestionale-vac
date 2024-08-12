@@ -5,7 +5,13 @@ const Hospital = require('../schemas/Hospital')
 /*GET ALL HOSPITALS*/
 router.get('/', async (req, res, next) => {
     const hospitals = await Hospital.find({})
-        .populate('therapies')
+        .populate({
+            path: 'therapies',
+            populate: {
+                path: 'machine',
+                model: 'Machine'
+            }
+        });
     return res.json({ hospitals })
 })
 

@@ -5,7 +5,13 @@ const Patient = require('../schemas/Patient')
 //GET ALL PATIENTS
 router.get('/', async (req, res, next) => {
     const patients = await Patient.find({})
-        .populate('therapies');
+         .populate({
+                path: 'therapies',
+                populate: {
+                    path: 'machine',
+                    model: 'Machine'
+                }
+            });
     return res.json({ patients })
 })
 
