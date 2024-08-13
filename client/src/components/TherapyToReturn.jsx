@@ -8,7 +8,6 @@ import { useLocation } from "react-router-dom";
 
 //This component is valid for the machines that are still running or that are ready to be archived and the machine to be returned
 export default function TherapyToReturn({ therapy, machine, patient, hospital, setSuccessMessage, setErrorMessage }) {
-    const location = useLocation()
     const { reloadData } = useContext(DataContext)
     const [therapyToEdit, setTherapyToEdit] = useState();
     const [data, setData] = useState({
@@ -76,25 +75,21 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
                 <div className="info-date">
                     <p>Terapia iniziata il <input type="date" name="therapyStartDate" value={data.therapyStartDate} disabled={therapyToEdit !== therapy._id} onChange={onChange} /> e terminata il <input type="date" name="therapyEndDate" value={data.therapyEndDate} disabled={therapyToEdit !== therapy._id} onChange={onChange} /></p>
                 </div>
-                <div className="info-macchina">
-                    <p>Macchina: {machine.motor + ' ' + machine.serialNumber}</p>
-                </div>
-                {location.pathname !== '/dettagliRisultato' &&
-                    <>
-                        <p>Assegnata a:</p>
-                        {patient ? (
-                            <div className="info-paziente">
-                                <p>{patient.name + ' ' + patient.lastName + ' di ' + patient.city + ' TEL: ' + patient.phone}</p>
-                            </div>
-                        ) : (
-                            <div className="info-ospedale">
-                                <p>Ospedale {therapy.hospital.name +' di '+therapy.hospital.city}</p>
-                            </div>
-
-                        )}
-                    </>
+                {machine &&
+                    <div className="info-macchina">
+                        <p>Macchina: {machine.motor + ' ' + machine.serialNumber}</p>
+                    </div>
                 }
-
+                {patient &&
+                    <div className="info-paziente">
+                        <p>Assegnata a:</p>
+                        <p>{patient.name + ' ' + patient.lastName + ' di ' + patient.city + ' TEL: ' + patient.phone}</p>
+                    </div>}
+                {hospital &&
+                    <div className="info-ospedale">
+                        <p>Assegnata a:</p>
+                        <p>Ospedale {hospital.name + ' di ' + hospital.city}</p>
+                    </div>}
                 <p>Note:</p>
                 <textarea value={data.therapyNotes} disabled={therapyToEdit !== therapy._id} name="therapyNotes" onChange={onChange}></textarea>
                 <div className="btns-nav">
