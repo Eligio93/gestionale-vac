@@ -10,7 +10,7 @@ export default function therapyHistory({ patient, hospital, machine, therapy }) 
             {(patient || hospital) ? (
                 <div>
                     <p>La macchina  assegnata aveva motore {therapy.machine.motor} con seriale {therapy.machine.serialNumber}</p>
-                    <p>Referente Terapia: {therapy.referer.name + ' '+therapy.referer.lastName} TEL: {therapy.referer.phone}</p>
+                    <p>Referente Terapia: {therapy.referer.name + ' ' + therapy.referer.lastName} TEL: {therapy.referer.phone}</p>
                 </div>
 
             ) : (
@@ -21,9 +21,15 @@ export default function therapyHistory({ patient, hospital, machine, therapy }) 
                             <p>TEL: {therapy.patient.phone}</p>
                             <p>Note:</p>
                             <p>{therapy.notes}</p>
-                            <p>Referente Terapia: {therapy.referer.name + ' '+therapy.referer.lastName} TEL: {therapy.referer.phone}</p>
+                            <p>Referente Terapia: {therapy.referer.name + ' ' + therapy.referer.lastName} TEL: {therapy.referer.phone}</p>
                         </div>}
-                    {therapy.hospital && <p>Ciao</p>}
+                    {therapy.hospital &&
+                        <div>
+                            <p>Macchina assegnata a ospedale {therapy.hospital.name} di {therapy.hospital.city}</p>
+                            <p>Note:</p>
+                            <p>{therapy.notes}</p>
+                            <p>Referente Terapia: {therapy.referer.name + ' ' + therapy.referer.lastName} TEL: {therapy.referer.phone}</p>
+                        </div>}
 
                 </>
 
