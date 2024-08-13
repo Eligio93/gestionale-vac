@@ -11,11 +11,12 @@ export default function MachinesToReturn() {
     const { therapiesList, loading } = useContext(DataContext)
     const [successMessage, setSuccessMessage] = useState()
     const [errorMessage, setErrorMessage] = useState()
-
+    const today = new Date()
+    
     if (loading) {
         return <p>Loading...</p>
     }
-    const today = new Date()
+ 
     const finishedTherapies = therapiesList.filter((therapy) => isBefore(therapy.endDate, today) && therapy.archived == false)
     if (successMessage) {
         return <p className="success-msg">{successMessage}</p>
