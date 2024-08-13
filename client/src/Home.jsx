@@ -6,7 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 export default function Home() {
+
+    
     const { patientsList, hospitalsList, machinesList } = useContext(DataContext)
     const [filteredPatient, setFilteredPatient] = useState([]);
     const [filteredHospital, setFilteredHospital] = useState([]);
@@ -16,7 +19,7 @@ export default function Home() {
 
 
     function handleSelection(selectedResult) {
-        navigate('/dettagliRisultato', { state: selectedResult })
+        navigate('/dettagliRisultato',{ state: selectedResult})
     }
 
     function handleSearch(value) {
