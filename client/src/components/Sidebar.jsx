@@ -3,19 +3,13 @@ import { Link } from "react-router-dom";
 export default function Sidebar() {
     return (
         <aside className="sidebar">
-            <ul className="">
-                <li>
-                    <Link to='/'>Home</Link>
-                </li>
-                <li>
-                    <Link to='/nuovaMacchina'>Aggiungi Macchina</Link>
-                </li>
-                <li>
-                    <Link to='/nuovoPaziente'>Aggiungi Paziente</Link>
-                </li>
-                <li>
-                    <Link to='/nuovaTerapia'>Nuova Terapia</Link>
-                </li>
+            <ul>
+                <Link to='/'><li>Home</li></Link>
+                <Link to='/nuovaMacchina'><li>Aggiungi Macchina</li></Link>
+                <Link to='/nuovoPaziente'><li>Aggiungi Paziente</li></Link>
+                <Link to='/nuovoOspedale'><li>Aggiungi Ospedale</li></Link>
+                <Link to='/nuovaTerapia'><li>Nuova Terapia</li></Link>
+                <Link to='/ritiro'><li>Macchine da ritirare</li></Link>
             </ul>
         </aside>
     );
