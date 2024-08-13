@@ -8,7 +8,19 @@ const { default: mongoose } = require('mongoose');
 /*GET ALL MACHINES*/
 router.get('/', async (req, res, next) => {
     const machines = await Machine.find({})
-        .populate('therapies')
+        .populate({
+            path: 'therapies',
+            populate: [
+                {
+                    path: 'hospital',
+                    model: 'Hospital'
+                },
+                {
+                    path: 'patient',
+                    model: 'Patient'
+                }
+            ]
+        });
     return res.json({ machines })
 })
 
@@ -33,10 +45,12 @@ router.post('/newMachine', async function (req, res) {
 
 /*RETURN A MACHINE*/
 router.put('/return', async (req, res, next) => {
+    
     const patient = req.body.patient
     const machine = req.body.machine
     const hospital = req.body.hospital
     const therapyId = req.body.therapy._id
+
     //start session to make sure all the field are updated correctly
     const session = await mongoose.startSession();
     session.startTransaction();
