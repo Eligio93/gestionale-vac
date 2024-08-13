@@ -9,6 +9,8 @@ import NewPatient from './NewPatient.jsx'
 import NewHospital from './NewHospital.jsx'
 import NewTherapy from './NewTherapy.jsx'
 import { DataProvider } from './components/DataContext.jsx'
+import MachinesToReturn from './MachinesToReturn.jsx'
+import DetailedResult from './components/DetailedResult.jsx'
 
 //defines router and routes
 const router = createBrowserRouter([
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: '/nuovaTerapia',
         element: <NewTherapy />
+      },
+      {
+        path: '/ritiro',
+        element: <MachinesToReturn />
+      },
+      {
+        path: '/dettagliRisultato',
+        element: <DetailedResult />
       }
     ]
   }
