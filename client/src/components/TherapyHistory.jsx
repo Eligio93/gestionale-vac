@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { format } from "date-fns"
 
 export default function therapyHistory({ patient, hospital, machine, therapy }) {
@@ -11,6 +10,8 @@ export default function therapyHistory({ patient, hospital, machine, therapy }) 
                 <div>
                     <p>La macchina  assegnata aveva motore {therapy.machine.motor} con seriale {therapy.machine.serialNumber}</p>
                     <p>Referente Terapia: {therapy.referer.name + ' ' + therapy.referer.lastName} TEL: {therapy.referer.phone}</p>
+                    <p>Note</p>
+                    <p>{therapy.notes}</p>
                 </div>
 
             ) : (
