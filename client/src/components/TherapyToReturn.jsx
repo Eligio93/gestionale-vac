@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { DataContext } from "./DataContext";
 import Popup from "./Popup";
-import { useLocation } from "react-router-dom";
 
 
 //This component is valid for the machines that are still running or that are ready to be archived and the machine to be returned
@@ -96,13 +95,13 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
                     {therapyToEdit == therapy._id ? (
                         <>
                             <button onClick={cancelEdit}>Annulla</button>
-                            <button onClick={() => handleEditSave(therapy._id)}>Salva Modifiche</button>
+                            <button className="green-btn" onClick={() => handleEditSave(therapy._id)}>Salva Modifiche</button>
                         </>
 
                     ) : (
                         <>
-                            {isBefore(data.therapyEndDate, today) && <button onClick={() => { setActivePopUp(true) }}>Ritira</button>}
-                            <button onClick={(e) => handleEdit(e, therapy._id)}>Modifica</button>
+                            {isBefore(data.therapyEndDate, today) && <button className='red-btn' onClick={() => { setActivePopUp(true) }}>Ritira</button>}
+                            <button className="teal-btn" onClick={(e) => handleEdit(e, therapy._id)}>Modifica</button>
                         </>
                     )}
                 </div>
