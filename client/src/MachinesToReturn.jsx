@@ -26,6 +26,7 @@ export default function MachinesToReturn() {
     }
     return (
         <>
+            <h2 className="title">Macchine pronte al ritiro</h2>
             {finishedTherapies.length < 1 && <p>Non ci sono macchine da ritirare</p>}
             {finishedTherapies.length > 0 && <ul className="ended-therapies-list">
                 {finishedTherapies.map((therapy) =>
