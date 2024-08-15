@@ -51,8 +51,11 @@ export default function DetailedResult() {
         const therapyHistory = patient.therapies.filter((therapy) => therapy.archived == true)
         return (
             <div className="detailed-result">
-                <h3>Scheda {patient.name + ' ' + patient.lastName}</h3>
-                <h4>Terapie in corso o con macchina da ritirare</h4>
+                <h2 className="title">
+                    <span>Scheda {patient.name + ' ' + patient.lastName}</span>
+                    <span>di {patient.city} TEL: {patient.phone}</span>
+                </h2>
+                <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
                 {inTherapy && activeTherapies.length == 1 ? (
                     <ul>
                         < TherapyToReturn
@@ -66,11 +69,12 @@ export default function DetailedResult() {
                         />
                     </ul>
                 ) : (<p>Non ci sono terapie in corso</p>)}
-                <h4>Storico Terapie</h4>
+                <h3 className="subtitle">Storico Terapie</h3>
                 {therapyHistory && therapyHistory.length > 0 ? (
                     <ul>
                         {therapyHistory.slice().reverse().map((therapy) =>
                             <TherapyHistory
+                                key={therapy._id}
                                 patient={patient}
                                 hospital={hospital}
                                 machine={therapy.machine}
@@ -88,8 +92,8 @@ export default function DetailedResult() {
         const therapyHistory = hospital.therapies.filter((therapy) => therapy.archived == true)
         return (
             <div className="detailed-result">
-                <h3>Scheda {hospital.name}</h3>
-                <h4>Terapie in corso o con macchina da ritirare</h4>
+                <h2 className="title">Scheda {hospital.name}</h2>
+                <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
                 {activeTherapies.length > 0 ? (
                     <ul>
                         {activeTherapies.map((therapy) =>
@@ -108,11 +112,12 @@ export default function DetailedResult() {
 
                     </ul>
                 ) : (<p>Non ci sono terapie in corso</p>)}
-                <h4>Storico Terapie</h4>
+                <h3 className="subtitle">Storico Terapie</h3>
                 {therapyHistory && therapyHistory.length > 0 ? (
                     <ul>
                         {therapyHistory.slice().reverse().map((therapy) =>
                             <TherapyHistory
+                                key={therapy._id}
                                 patient={patient}
                                 hospital={hospital}
                                 machine={therapy.machine}
@@ -130,8 +135,8 @@ export default function DetailedResult() {
         const therapyHistory = machine.therapies.filter((therapy) => therapy.archived == true)
         return (
             <div className="detailed-result">
-                <h3>Scheda {machine.serialNumber + ' di ' + machine.motor}</h3>
-                <h4>Terapie in corso o con macchina da ritirare</h4>
+                <h2 className="title">Scheda {machine.serialNumber + ' di ' + machine.motor}</h2>
+                <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
                 {activeTherapies.length > 0 ? (
                     <ul>
                         < TherapyToReturn
@@ -145,11 +150,12 @@ export default function DetailedResult() {
                         />
                     </ul>
                 ) : (<p>Non ci sono terapie in corso</p>)}
-                <h4>Storico Terapie</h4>
+                <h3 className="subtitle">Storico Terapie</h3>
                 {therapyHistory && therapyHistory.length > 0 ? (
                     <ul>
                         {therapyHistory.slice().reverse().map((therapy) =>
                             <TherapyHistory
+                                key={therapy._id}
                                 machine={machine}
                                 patient={patient}
                                 hospital={hospital}
