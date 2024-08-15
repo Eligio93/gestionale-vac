@@ -158,90 +158,101 @@ export default function NewTherapy() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="form">
-            <h2>Inizia Nuova Terapia</h2>
+        <>
+            <h2 className="title">Inizia Nuova Terapia</h2>
+            <form onSubmit={handleSubmit} className="form">
+                <h3>A chi e destinata la macchina?</h3>
+                <fieldset >
+                    <label htmlFor="">Paziente:
+                        <input type="radio" name='destination' value={'patient'} onChange={handleCheckbox} checked={destination === 'patient'} required />
+                    </label>
+                    <label htmlFor="">Ospedale:
+                        <input type="radio" name="destination" value={'hospital'} onChange={handleCheckbox} checked={destination === 'hospital'} required />
+                    </label>
 
-            <h3>A chi e destinata la macchina?</h3>
-            <fieldset >
-                <label htmlFor="">Paziente:
-                    <input type="radio" name='destination' value={'patient'} onChange={handleCheckbox} checked={destination === 'patient'} required />
-                </label>
-                <label htmlFor="">Ospedale
-                    <input type="radio" name="destination" value={'hospital'} onChange={handleCheckbox} checked={destination === 'hospital'} required />
-                </label>
 
 
-
-            </fieldset>
-            {destination == 'patient' ? (
-                <div className="info-tab info-paziente form">
-                    <h3>Info Paziente</h3>
-                    {patientError && <p className="error-msg">{patientError}</p>}
-                    <div className="search-params">
-                        <label htmlFor="">Nome Paziente</label>
-                        <input type="text" name="patientName" value={data.patientName} onChange={handleSearch} />
-                        <label htmlFor="">Cognome Paziente</label>
-                        <input type="text" name='patientLastName' value={data.patientLastName} onChange={handleSearch} />
-                        <ul className={`search-results ${filteredPatient.length == 0 && 'hidden'}`}>
-                            <SearchResults filteredPatient={filteredPatient} handleSelection={handleSelection} />
-                        </ul>
+                </fieldset>
+                {destination == 'patient' ? (
+                    <div className="info-tab info-paziente form">
+                        <h3 className="subtitle">Info Paziente</h3>
+                        {patientError && <p className="error-msg">{patientError}</p>}
+                        <div className="search-params">
+                            <label htmlFor="">Nome Paziente</label>
+                            <input type="text" name="patientName" value={data.patientName} onChange={handleSearch} />
+                            <label htmlFor="">Cognome Paziente</label>
+                            <input type="text" name='patientLastName' value={data.patientLastName} onChange={handleSearch} />
+                            <ul className={`search-results ${filteredPatient.length == 0 && 'hidden'}`}>
+                                <SearchResults filteredPatient={filteredPatient} handleSelection={handleSelection} />
+                            </ul>
+                        </div>
+                        <label htmlFor="">Citta Paziente</label>
+                        <input type="text" value={data.patientCity} disabled />
+                        <label htmlFor="">Telefono Paziente</label>
+                        <input type="text" value={data.patientPhone} disabled />
                     </div>
-                    <label htmlFor="">Citta Paziente</label>
-                    <input type="text" value={data.patientCity} disabled />
-                    <label htmlFor="">Telefono Paziente</label>
-                    <input type="text" value={data.patientPhone} disabled />
-                </div>
-            ) : (destination == 'hospital' ? (
-                <div className="info-tab info-ospedale form">
-                    <h3>Informazioni Ospedale</h3>
-                    <div className="search-params">
-                        <label>Nome Ospedale:</label>
-                        <input type="text" name='hospitalName' value={data.hospitalName} onChange={handleSearch} />
-                        <ul className={`search-results ${filteredHospital.length == 0 && 'hidden'}`}>
-                            <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection} />
-                        </ul>
+                ) : (destination == 'hospital' ? (
+                    <div className="info-tab info-ospedale form">
+                        <h3 className="subtitle">Informazioni Ospedale</h3>
+                        <div className="search-params">
+                            <label>Nome Ospedale:</label>
+                            <input type="text" name='hospitalName' value={data.hospitalName} onChange={handleSearch} />
+                            <ul className={`search-results ${filteredHospital.length == 0 && 'hidden'}`}>
+                                <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection} />
+                            </ul>
+                        </div>
+                        <label>Citta:</label>
+                        <input type="text" name='hospitaCity' value={data.hospitalCity} disabled />
+
                     </div>
-                    <label>Citta:</label>
-                    <input type="text" name='hospitaCity' value={data.hospitalCity} disabled />
 
-                </div>
-
-            ) : (null))}
-            {/*if checkbtn is been clicked show info about the referer*/}
-            {destination &&
-                <div className="form info-tab info-referer">
-                    <h3>Informazioni referente</h3>
-                    <label> Nome:</label>
-                    <input type="text" name="refererName" value={data.refererName} onChange={handleChange} />
-                    <label>Cognome:</label>
-                    <input type="text" name="refererLastName" value={data.refererLastName} onChange={handleChange} />
-                    <label>Telefono:</label>
-                    <input type="phone" name="refererPhone" value={data.refererPhone} onChange={handleChange} />
-                </div>
-            }
-            <h3>Info Macchina</h3>
-            {machineError && <p className="error-msg">{machineError}</p>}
-            <div className="search-params">
-                <label>Seriale Macchina:</label>
-                <input type="text" name="machineSerial" value={data.machineSerial} onChange={handleSearch} />
-                <ul className={`search-results ${filteredMachine.length == 0 && 'hidden'}`}>
-                    <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
-                </ul>
-            </div>
-            <label>Motore Macchina</label>
-            <input type="text" name="machineMotor" value={data.machineMotor} disabled />
+                ) : (null))}
+                {/*if checkbtn is been clicked show info about the referer*/}
+                {destination &&
+                    <>
+                        <div className="form info-tab info-referer">
+                            <h3 className="subtitle">Informazioni referente</h3>
+                            <label> Nome:</label>
+                            <input type="text" name="refererName" value={data.refererName} onChange={handleChange} />
+                            <label>Cognome:</label>
+                            <input type="text" name="refererLastName" value={data.refererLastName} onChange={handleChange} />
+                            <label>Telefono:</label>
+                            <input type="phone" name="refererPhone" value={data.refererPhone} onChange={handleChange} />
+                        </div>
 
 
-            <h3>Info Terapia</h3>
-            <label>Data Inizio:</label>
-            <input type="date" name="therapyStartDate" value={data.therapyStartDate} onChange={handleChange} />
-            <label>Data Fine:</label>
-            <input type="date" name="therapyEndDate" value={data.therapyEndDate} onChange={handleChange} />
-            <label>Note:</label>
-            <textarea name='therapyNotes' value={data.therapyNotes} onChange={handleChange}>
-            </textarea>
-            <button type="submit" className="green-btn">Inizia Nuova Terapia</button>
 
-        </form>
+                        <div className="form info-tab info-machine">
+                            <h3 className="subtitle">Info Macchina</h3>
+                            {machineError && <p className="error-msg">{machineError}</p>}
+                            <div className="search-params">
+                                <label>Seriale Macchina:</label>
+                                <input type="text" name="machineSerial" value={data.machineSerial} onChange={handleSearch} />
+                                <ul className={`search-results ${filteredMachine.length == 0 && 'hidden'}`}>
+                                    <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
+                                </ul>
+                            </div>
+                            <label>Motore Macchina</label>
+                            <input type="text" name="machineMotor" value={data.machineMotor} disabled />
+                        </div>
+
+
+                        <div className="form info-tab info-therapy">
+                            <h3 className="subtitle">Info Terapia</h3>
+                            <label>Data Inizio:</label>
+                            <input type="date" name="therapyStartDate" value={data.therapyStartDate} onChange={handleChange} />
+                            <label>Data Fine:</label>
+                            <input type="date" name="therapyEndDate" value={data.therapyEndDate} onChange={handleChange} />
+                            <label>Note:</label>
+                            <textarea name='therapyNotes' value={data.therapyNotes} onChange={handleChange}>
+                            </textarea>
+                        </div>
+                        <button type="submit" className="green-btn">Inizia Nuova Terapia</button>
+
+                    </>
+                }
+
+            </form>
+        </>
     )
 }
