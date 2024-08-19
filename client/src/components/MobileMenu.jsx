@@ -28,9 +28,9 @@ export default function MobileMenu() {
 
     return (
         <div className="mobileMenu">
-            <header>
+            <div className="mobile-header">
                 <img ref={iconRef} src={hamburgerIcon} alt="" onClick={() => setOpenMenu(!openMenu)} />
-            </header>
+            </div>
             <nav className={openMenu ? 'mobileNav' : 'hidden'} ref={menuRef}>
                 <ul>
                     <Link to='/'><li>Home</li></Link>
