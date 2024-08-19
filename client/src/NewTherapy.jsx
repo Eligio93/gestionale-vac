@@ -182,7 +182,7 @@ export default function NewTherapy() {
                             <input type="text" name="patientName" value={data.patientName} onChange={handleSearch} />
                             <label htmlFor="">Cognome Paziente</label>
                             <input type="text" name='patientLastName' value={data.patientLastName} onChange={handleSearch} />
-                            <ul className={`search-results ${filteredPatient.length == 0 && 'hidden'}`}>
+                            <ul className={`${filteredPatient.length == 0 ? 'hidden' : 'search-results' }`}>
                                 <SearchResults filteredPatient={filteredPatient} handleSelection={handleSelection} />
                             </ul>
                         </div>
@@ -197,7 +197,7 @@ export default function NewTherapy() {
                         <div className="search-params">
                             <label>Nome Ospedale:</label>
                             <input type="text" name='hospitalName' value={data.hospitalName} onChange={handleSearch} />
-                            <ul className={`search-results ${filteredHospital.length == 0 && 'hidden'}`}>
+                            <ul className={` ${filteredHospital.length == 0 ? 'hidden' : 'search-results'}`}>
                                 <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection} />
                             </ul>
                         </div>
@@ -228,7 +228,7 @@ export default function NewTherapy() {
                             <div className="search-params">
                                 <label>Seriale Macchina:</label>
                                 <input type="text" name="machineSerial" value={data.machineSerial} onChange={handleSearch} />
-                                <ul className={`search-results ${filteredMachine.length == 0 && 'hidden'}`}>
+                                <ul className={`${filteredMachine.length == 0 ? 'hidden' : 'search-results'}`}>
                                     <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
                                 </ul>
                             </div>
