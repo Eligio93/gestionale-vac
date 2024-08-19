@@ -12,7 +12,7 @@ export default function SearchResults(props) {
                         <p>{patient.name + ' ' + patient.lastName + ' di ' + patient.city}</p>
                     </div>
                     <div className="category-info">
-                        <p>in Pazienti</p>
+                        <p>Pazienti</p>
                     </div>
 
                 </li>
@@ -23,7 +23,7 @@ export default function SearchResults(props) {
                         <p>{hospital.name + ' di ' + hospital.city}</p>
                     </div>
                     <div className="category-info">
-                        <p>in Ospedali</p>
+                        <p>Ospedali</p>
                     </div>
                 </li>
             )}
@@ -33,7 +33,7 @@ export default function SearchResults(props) {
                         <p>{machine.serialNumber + ' ' + machine.motor}</p>
                     </div>
                     <div className="category-info">
-                        <p>in Macchine</p>
+                        <p>Macchine</p>
                     </div>
                 </li>
             )}
