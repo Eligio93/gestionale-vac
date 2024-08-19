@@ -1,0 +1,33 @@
+.home{
+    margin-top:50px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home .searchbar{
+    position: relative;
+    width: 100%;
+}
+.home .searchbar input{
+    width: 100%;
+    margin-top:50px;
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width:800px) {
+
+    .home {
+        height: 100%;
+        width: 100%;
+        display: flex;
+       
+        
+    }
+    .home h3{
+        width: 100%;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+}

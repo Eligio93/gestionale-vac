@@ -1,0 +1,30 @@
+.mobileMenu {
+    position: relative;
+    background-color: var(--dark-blue);
+}
+
+.mobile-header {
+    height: 50px;
+    padding-left: 10px;
+}
+
+.mobile-header img {
+    height: 100%;
+}
+
+.mobileNav {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    background-color: var(--dark-blue);
+    z-index: 1;
+}
+
+.mobileNav li{
+    text-decoration: none;
+    color: white;
+    border-bottom: 1px solid white;
+    padding: 5px;
+    font-size: 1rem;
+}

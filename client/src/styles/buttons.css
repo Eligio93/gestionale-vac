@@ -1,0 +1,43 @@
+button {
+    width: fit-content;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.green-btn {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+.green-btn:hover {
+    background-color: var(--light-green);
+}
+
+.red-btn {
+    background-color: var(--dark-red);
+    color: white;
+}
+
+.teal-btn {
+    background-color: var(--dark-teal);
+    color: white;
+}
+
+.teal-btn:hover {
+    background-color: var(--light-teal);
+}
+
+.red-btn:hover {
+    background-color: var(--light-red);
+}
+
+.btns-nav {
+    display: flex;
+    gap: 10px
+}
