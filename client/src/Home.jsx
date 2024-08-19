@@ -55,10 +55,10 @@ export default function Home() {
 
     return (
         <div className="home">
-            <h3>Cerca macchine,pazienti o ospedali</h3>
+            <h3>Cerca macchine, pazienti o ospedali</h3>
             <div className="searchbar search-params">
                 <input type="text" placeholder="Inizia a digitare..." onChange={(e) => handleSearch(e.target.value)} />
-                <ul className={`search-results ${hideList ? 'hidden' : ''}`}>
+                <ul className={`${hideList ? 'hidden' : 'search-results'}`}>
                     <SearchResults filteredPatient={filteredPatient} handleSelection={handleSelection} />
                     <SearchResults filteredHospital={filteredHospital} handleSelection={handleSelection} />
                     <SearchResults filteredMachine={filteredMachine} handleSelection={handleSelection} />
