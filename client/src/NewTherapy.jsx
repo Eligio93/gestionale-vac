@@ -15,6 +15,7 @@ export default function NewTherapy() {
     const [filteredMachine, setFilteredMachine] = useState([]);
     const [patientError, setPatientError] = useState();
     const [machineError, setMachineError] = useState();
+    const [success, setSuccess] = useState();
     const [error, setError] = useState()
     const [data, setData] = useState({
         patientId: '',
@@ -138,8 +139,12 @@ export default function NewTherapy() {
         try {
             const response = await axios.post('http://localhost:3001/therapies/newTherapy', { data, destination })
             if (response.status == 200) {
-                reloadData();
-                navigate('/');
+                setSuccess(response.data.message)
+                setTimeout(() => {
+                    setSuccess()
+                    reloadData();
+                    navigate('/')
+                }, 2000)
             }
         } catch (err) {
             console.log(err)
@@ -161,7 +166,10 @@ export default function NewTherapy() {
         return <p>Loading ...</p>
     }
     if (error) {
-        return <p>{error}</p>
+        return <p className="error-msg">{error}</p>
+    }
+    if (success) {
+        return <p className="success-msg">{success}</p>
     }
 
     return (
