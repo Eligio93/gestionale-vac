@@ -21,7 +21,7 @@ export default function MobileMenu() {
             document.removeEventListener('mousedown', handler)
         }
     })
-
+    //when the user goes to a different page from the menu, the menu gets closed and the user can navigate
     useEffect(() => {
         setOpenMenu(false)
     }, [location.pathname])

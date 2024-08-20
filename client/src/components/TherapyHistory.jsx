@@ -1,6 +1,8 @@
 import { format } from "date-fns"
 
 export default function therapyHistory({ patient, hospital, machine, therapy }) {
+    //this component, based on what props are been passed to, is able to show history on therapies when a machine, hospital or patient
+    //is been passed from the searchBar in the Home Component. This component shows just information that cannot be edited.
     return (
         <li className="listed-therapy-history">
             <div className="history-date">

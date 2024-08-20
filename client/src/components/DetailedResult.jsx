@@ -7,6 +7,7 @@ import TherapyHistory from "./TherapyHistory";
 
 export default function DetailedResult() {
     const location = useLocation()
+    //selected result is the actual element which is been clicked in the search results from the home component
     const selectedResult = location.state
     const { patientsList, hospitalsList, machinesList, loading } = useContext(DataContext)
     const [patient, setPatient] = useState()
@@ -16,25 +17,28 @@ export default function DetailedResult() {
     const [errorMessage, setErrorMessage] = useState()
 
     useEffect(() => {
+        //if the selected result is a patient, we pick that patient from the patientsList
         if (selectedResult.patient && patientsList) {
             const foundPatient = patientsList.find((patient) => patient._id === selectedResult.patient._id);
             setPatient(foundPatient);
             setHospital();
             setMachine()
         }
+        //same thing with the hospitals
         if (selectedResult.hospital && hospitalsList) {
             const foundHospital = hospitalsList.find((hospital) => hospital._id === selectedResult.hospital._id);
             setPatient();
             setHospital(foundHospital);
             setMachine()
         }
+        //same things with machines
         if (selectedResult.machine && machinesList) {
             const foundMachine = machinesList.find((machine) => machine._id === selectedResult.machine._id);
             setPatient();
             setHospital();
             setMachine(foundMachine)
         }
-    }, [selectedResult, patientsList, hospitalsList, machinesList, loading]); // Dipendenze
+    }, [selectedResult, patientsList, hospitalsList, machinesList, loading]); // Dependecies
 
     if (loading) {
         return <p>Loading...</p>
@@ -45,9 +49,13 @@ export default function DetailedResult() {
     if (errorMessage) {
         return <p className="error-msg">{errorMessage}</p>
     }
+
     if (patient) {
+        //check if the patient is still in therapy
         const inTherapy = patient.inTherapy
+        //check also the therapies the patient is on
         const activeTherapies = patient.therapies.filter((therapy) => therapy.archived == false)
+        //check old therapies that the patient had
         const therapyHistory = patient.therapies.filter((therapy) => therapy.archived == true)
         return (
             <>
@@ -91,6 +99,7 @@ export default function DetailedResult() {
 
     }
     if (hospital) {
+        //same thing with hospital
         const activeTherapies = hospital.therapies.filter((therapy) => therapy.archived == false)
         const therapyHistory = hospital.therapies.filter((therapy) => therapy.archived == true)
         return (
@@ -135,6 +144,7 @@ export default function DetailedResult() {
 
     }
     if (machine) {
+        //same thing with machine
         const activeTherapies = machine.therapies.filter((therapy) => therapy.archived == false)
         const therapyHistory = machine.therapies.filter((therapy) => therapy.archived == true)
         return (

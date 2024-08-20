@@ -5,7 +5,7 @@ import { DataContext } from "./DataContext";
 import Popup from "./Popup";
 
 
-//This component is valid for the machines that are still running or that are ready to be archived and the machine to be returned
+//This component is valid for the machines that are still running or that are ready to be archived, and the machines ready to be returned
 export default function TherapyToReturn({ therapy, machine, patient, hospital, setSuccessMessage, setErrorMessage }) {
     const { reloadData } = useContext(DataContext)
     const [therapyToEdit, setTherapyToEdit] = useState();

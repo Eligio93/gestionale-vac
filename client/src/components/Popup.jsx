@@ -6,6 +6,7 @@ import { DataContext } from "./DataContext"
 
 export default function ReturnConfirmationPopUp(props) {
     const { reloadData } = useContext(DataContext)
+    //data collect datas based on the operation we want to confirm and that it will show in the confirmation message
     const data = {
         machine: props.machine,
         therapy: props.therapy,

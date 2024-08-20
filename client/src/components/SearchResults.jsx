@@ -3,7 +3,8 @@ export default function SearchResults(props) {
     const filteredHospital = props.filteredHospital
     const filteredMachine = props.filteredMachine
     const handleSelection = props.handleSelection
-
+    //here for any searchable category(patients,hospital,machines) , is been created a list element which is going to be part of the
+    //search results. When an element is been selected is been transferred to the handleSelection function to be processed
     return (
         <>
             {filteredPatient && filteredPatient.length > 0 && filteredPatient.map((patient) =>

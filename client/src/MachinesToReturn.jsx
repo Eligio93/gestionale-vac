@@ -12,11 +12,11 @@ export default function MachinesToReturn() {
     const [successMessage, setSuccessMessage] = useState()
     const [errorMessage, setErrorMessage] = useState()
     const today = new Date()
-    
+
     if (loading) {
         return <p>Loading...</p>
     }
- 
+    //finished therapies contains therapies with an endDate before than today date
     const finishedTherapies = therapiesList.filter((therapy) => isBefore(therapy.endDate, today) && therapy.archived == false)
     if (successMessage) {
         return <p className="success-msg">{successMessage}</p>
