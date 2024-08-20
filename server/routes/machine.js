@@ -40,12 +40,12 @@ router.post('/newMachine', async function (req, res) {
         return res.json({ message: 'Macchina Aggiunta correttamente' })
     } catch (err) {
         res.status(500).json({ err })
-    }
+    }    
 })
 
 /*RETURN A MACHINE*/
 router.put('/return', async (req, res, next) => {
-    
+
     const patient = req.body.patient
     const machine = req.body.machine
     const hospital = req.body.hospital
