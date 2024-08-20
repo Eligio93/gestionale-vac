@@ -35,7 +35,7 @@ router.put('/edit/:therapyId', async (req, res, next) => {
         )
         return res.json('Terapia modificata con successo')
     } catch (err) {
-        res.status(500).json({message:'Errore nella modifica della terapia'})
+        res.status(500).json({ message: 'Errore nella modifica della terapia' })
     }
 })
 
@@ -87,7 +87,7 @@ router.post('/newTherapy', async (req, res, next) => {
             }
         }
 
-        const machine = await Machine.findOne({ serialNumber: data.machineSerial, motor:data.machineMotor })
+        const machine = await Machine.findOne({ serialNumber: data.machineSerial, motor: data.machineMotor })
         if (machine) {
             therapy.machine = machine._id;
             machine.therapies.push(therapy._id)
