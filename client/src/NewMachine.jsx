@@ -54,23 +54,24 @@ export default function NewMachine() {
             <h2 className="title">Aggiungi Nuova Macchina</h2>
             <form onSubmit={handleSubmit} className="newMachine-form form" >
                 {message && <p className="error-msg">{message}</p>} {/*this message apeears in case the machine is already in the DB*/}
-                <label htmlFor="reg-motoreMacchina">Motore Macchina</label>
+                <label htmlFor="newMachine-motor">Motore Macchina</label>
                 <select
                     name="machineMotor"
-                    id="reg-motoreMacchina"
+                    id="newMachine-motor"
                     value={data.machineMotor}
                     onChange={handleDataChange}
                 >
                     <option value="vaculta">Vaculta</option>
                     <option value="activac">Activac</option>
                 </select>
-                <label htmlFor="reg-serialeMacchina">Seriale Macchina:</label>
+                <label htmlFor="newMachine-serial">Seriale Macchina:</label>
                 <input
                     type="text"
-                    id="reg-serialeMacchina"
+                    id="newMachine-serial"
                     name="serialNumber"
                     value={data.serialNumber}
                     onChange={handleDataChange}
+                    required
                 />
                 <button type="submit" className="green-btn">Registra Macchina</button>
             </form>
