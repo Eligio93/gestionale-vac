@@ -20,11 +20,18 @@
     background-color: var(--dark-blue);
     z-index: 1;
 }
+.mobileNav ul{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    padding-left: 10px;
+}
 
 .mobileNav li{
     text-decoration: none;
     color: white;
     border-bottom: 1px solid white;
     padding: 5px;
+    padding-bottom:10px;
     font-size: 1rem;
 }
