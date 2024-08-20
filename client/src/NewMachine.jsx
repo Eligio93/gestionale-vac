@@ -6,7 +6,8 @@ import { DataContext } from "./components/DataContext";
 export default function NewMachine() {
     const { reloadData } = useContext(DataContext)
     const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState('')
+    const [success, setSuccess] = useState()
+    const [message, setMessage] = useState()
     const [data, setData] = useState({
         machineMotor: 'vaculta',
         serialNumber: ''
@@ -17,12 +18,16 @@ export default function NewMachine() {
         e.preventDefault();
         setLoading(true)
         try {
-            const result = await axios.post('http://localhost:3001/machines/newMachine', data)
-            reloadData()
-            navigate('/');
-
+            const response = await axios.post('http://localhost:3001/machines/newMachine', data)
+            if (response.status == 200) {
+                setSuccess(response.data.message)
+                setTimeout(() => {
+                    setSuccess()
+                    reloadData()
+                    navigate('/')
+                }, 2000)
+            }
         } catch (err) {
-            console.log(err)
             setMessage(err.response.data.message)
         } finally {
             setLoading(false)
@@ -40,12 +45,15 @@ export default function NewMachine() {
     if (loading) {
         return <p>Loading...</p>
     }
+    if (success) {
+        return <p className="success-msg">{success}</p>
+    }
 
     return (
         <>
             <h2 className="title">Aggiungi Nuova Macchina</h2>
             <form onSubmit={handleSubmit} className="newMachine-form form" >
-                {message && <p className="error-msg">{message}</p>}
+                {message && <p className="error-msg">{message}</p>} {/*this message apeears in case the machine is already in the DB*/}
                 <label htmlFor="reg-motoreMacchina">Motore Macchina</label>
                 <select
                     name="machineMotor"
