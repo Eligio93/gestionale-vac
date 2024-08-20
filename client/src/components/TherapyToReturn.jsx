@@ -76,7 +76,8 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
                 </div>
                 {machine &&
                     <div className="info-macchina">
-                        <p>Macchina: {machine.motor + ' ' + machine.serialNumber}</p>
+                        <p>Macchina: </p>
+                        <p>{machine.motor + ' ' + machine.serialNumber}</p>
                     </div>
                 }
                 {patient &&
