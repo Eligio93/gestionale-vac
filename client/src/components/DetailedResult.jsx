@@ -50,39 +50,42 @@ export default function DetailedResult() {
         const activeTherapies = patient.therapies.filter((therapy) => therapy.archived == false)
         const therapyHistory = patient.therapies.filter((therapy) => therapy.archived == true)
         return (
-            <div className="detailed-result">
+            <>
                 <h2 className="title">
                     <span>Scheda {patient.name + ' ' + patient.lastName}</span>
                     <span>di {patient.city} TEL: {patient.phone}</span>
                 </h2>
-                <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
-                {inTherapy && activeTherapies.length == 1 ? (
-                    <ul>
-                        < TherapyToReturn
-                            patient={patient}
-                            hospital={hospital}
-                            therapy={activeTherapies[0]}
-                            machine={activeTherapies[0].machine}
-                            todayDate={new Date()}
-                            setSuccessMessage={setSuccessMessage}
-                            setErrorMessage={setErrorMessage}
-                        />
-                    </ul>
-                ) : (<p>Non ci sono terapie in corso</p>)}
-                <h3 className="subtitle">Storico Terapie</h3>
-                {therapyHistory && therapyHistory.length > 0 ? (
-                    <ul>
-                        {therapyHistory.slice().reverse().map((therapy) =>
-                            <TherapyHistory
-                                key={therapy._id}
+                <div className="detailed-result">
+
+                    <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
+                    {inTherapy && activeTherapies.length == 1 ? (
+                        <ul>
+                            < TherapyToReturn
                                 patient={patient}
                                 hospital={hospital}
-                                machine={therapy.machine}
-                                therapy={therapy} />
-                        )}
-                    </ul>
-                ) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
-            </div>
+                                therapy={activeTherapies[0]}
+                                machine={activeTherapies[0].machine}
+                                todayDate={new Date()}
+                                setSuccessMessage={setSuccessMessage}
+                                setErrorMessage={setErrorMessage}
+                            />
+                        </ul>
+                    ) : (<p>Non ci sono terapie in corso</p>)}
+                    <h3 className="subtitle">Storico Terapie</h3>
+                    {therapyHistory && therapyHistory.length > 0 ? (
+                        <ul>
+                            {therapyHistory.slice().reverse().map((therapy) =>
+                                <TherapyHistory
+                                    key={therapy._id}
+                                    patient={patient}
+                                    hospital={hospital}
+                                    machine={therapy.machine}
+                                    therapy={therapy} />
+                            )}
+                        </ul>
+                    ) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
+                </div>
+            </>
 
         )
 
@@ -91,42 +94,43 @@ export default function DetailedResult() {
         const activeTherapies = hospital.therapies.filter((therapy) => therapy.archived == false)
         const therapyHistory = hospital.therapies.filter((therapy) => therapy.archived == true)
         return (
-            <div className="detailed-result">
+            <>
                 <h2 className="title">Scheda {hospital.name}</h2>
-                <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
-                {activeTherapies.length > 0 ? (
-                    <ul>
-                        {activeTherapies.map((therapy) =>
-                            < TherapyToReturn
-                                key={therapy._id}
-                                hospital={hospital}
-                                patient={patient}
-                                therapy={therapy}
-                                machine={therapy.machine}
-                                todayDate={new Date()}
-                                setSuccessMessage={setSuccessMessage}
-                                setErrorMessage={setErrorMessage}
-                            />
+                <div className="detailed-result">
+                    <h3 className="subtitle">Terapie in corso o con macchina da ritirare</h3>
+                    {activeTherapies.length > 0 ? (
+                        <ul>
+                            {activeTherapies.map((therapy) =>
+                                < TherapyToReturn
+                                    key={therapy._id}
+                                    hospital={hospital}
+                                    patient={patient}
+                                    therapy={therapy}
+                                    machine={therapy.machine}
+                                    todayDate={new Date()}
+                                    setSuccessMessage={setSuccessMessage}
+                                    setErrorMessage={setErrorMessage}
+                                />
 
-                        )}
+                            )}
 
-                    </ul>
-                ) : (<p>Non ci sono terapie in corso</p>)}
-                <h3 className="subtitle">Storico Terapie</h3>
-                {therapyHistory && therapyHistory.length > 0 ? (
-                    <ul>
-                        {therapyHistory.slice().reverse().map((therapy) =>
-                            <TherapyHistory
-                                key={therapy._id}
-                                patient={patient}
-                                hospital={hospital}
-                                machine={therapy.machine}
-                                therapy={therapy} />
-                        )}
-                    </ul>
-                ) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
-            </div>
-
+                        </ul>
+                    ) : (<p>Non ci sono terapie in corso</p>)}
+                    <h3 className="subtitle">Storico Terapie</h3>
+                    {therapyHistory && therapyHistory.length > 0 ? (
+                        <ul>
+                            {therapyHistory.slice().reverse().map((therapy) =>
+                                <TherapyHistory
+                                    key={therapy._id}
+                                    patient={patient}
+                                    hospital={hospital}
+                                    machine={therapy.machine}
+                                    therapy={therapy} />
+                            )}
+                        </ul>
+                    ) : (<p>Non ci sono vecchie terapie da mostrare</p>)}
+                </div>
+            </>
         )
 
     }
