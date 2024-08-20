@@ -4,13 +4,23 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Layout from './Layout.jsx'
 import Home from './Home.jsx'
 import NewMachine from './NewMachine.jsx'
-import './index.css'
+
 import NewPatient from './NewPatient.jsx'
 import NewHospital from './NewHospital.jsx'
 import NewTherapy from './NewTherapy.jsx'
 import { DataProvider } from './components/DataContext.jsx'
 import MachinesToReturn from './MachinesToReturn.jsx'
 import DetailedResult from './components/DetailedResult.jsx'
+import './styles/listedTherapies.css'
+import './styles/popup.css'
+import './styles/global.css'
+import './styles/forms.css'
+import './styles/home.css'
+import './styles/mobileMenu.css'
+import './styles/sidebar.css'
+import './styles/buttons.css'
+
+// import './index.css'
 
 //defines router and routes
 const router = createBrowserRouter([
