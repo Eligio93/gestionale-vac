@@ -12,6 +12,7 @@ export default function NewPatient() {
         city: '',
         phone: ''
     })
+    const [success, setSuccess] = useState()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
@@ -21,11 +22,16 @@ export default function NewPatient() {
         e.preventDefault();
         setLoading(true);
         try {
-            const result = await axios.post('http://localhost:3001/patients/newPatient', data)
-            reloadData()
-            navigate('/');
+            const response = await axios.post('http://localhost:3001/patients/newPatient', data)
+            if (response.status == 200) {
+                setSuccess(response.data.message)
+                setTimeout(() => {
+                    setSuccess()
+                    navigate('/');
+                }, 2000)
+                reloadData()
+            }
         } catch (err) {
-            console.log(err)
             setError(err.response.data.message)
         } finally {
             setLoading(false)
@@ -43,20 +49,23 @@ export default function NewPatient() {
     if (loading) {
         return <p>Loading..</p>
     }
+    if (success) {
+        return <p className="success-msg">{success}</p>
+    }
 
     return (
         <>
             <h2 className="title">Aggiungi Nuovo Paziente</h2>
-            <form action="" className="newPatient-form form" onSubmit={handleSubmit}>
+            <form className="newPatient-form form" onSubmit={handleSubmit}>
                 {error && <p className="error-msg">{error}</p>}
-                <label htmlFor="patient-name">Nome:</label>
-                <input type="text" minLength={2} required name="name" value={data.name} onChange={handleChange} />
-                <label htmlFor="patient-lastName">Cognome:</label>
-                <input type="text" minLength={2} required name="lastName" value={data.lastName} onChange={handleChange} />
-                <label htmlFor="patient-phone">Telefono:</label>
-                <input type="phone" required name="phone" value={data.phone} onChange={handleChange} />
-                <label htmlFor="patient-location">Citta:</label>
-                <input type="text" required name="city" value={data.city} onChange={handleChange} />
+                <label htmlFor="newPatient-name">Nome:</label>
+                <input id="newPatient-name" type="text" minLength={2} name="name" value={data.name} onChange={handleChange} required />
+                <label htmlFor="newPatient-lastName">Cognome:</label>
+                <input id="newPatient-lastName" type="text" minLength={2} name="lastName" value={data.lastName} onChange={handleChange} required />
+                <label htmlFor="newPatient-phone">Telefono:</label>
+                <input id="newPatient-phone" type="phone" name="phone" value={data.phone} onChange={handleChange} required />
+                <label htmlFor="newPatient-city">Citta:</label>
+                <input id="newPatient-city" type="text" name="city" value={data.city} onChange={handleChange} required />
                 <button type="submit" className="green-btn">Aggiungi Paziente</button>
             </form>
         </>
