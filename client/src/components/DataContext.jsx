@@ -9,13 +9,13 @@ export const DataProvider = ({ children }) => {
     const [hospitalsList, setHospitalsList] = useState();
     const [machinesList, setMachinesList] = useState();
     const [therapiesList, setTherapiesList] = useState();
-    const [loading,setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const apiEndpoints = [
-        { url: 'http://localhost:3001/patients', setter: setPatientsList, name: 'patients' },
-        { url: 'http://localhost:3001/hospitals', setter: setHospitalsList, name: 'hospitals' },
-        { url: 'http://localhost:3001/machines', setter: setMachinesList, name: 'machines' },
-        { url: 'http://localhost:3001/therapies', setter: setTherapiesList, name: 'therapies' }
+        { url: `${import.meta.env.VITE_SERVER_BASEURL}/patients`, setter: setPatientsList, name: 'patients' },
+        { url: `${import.meta.env.VITE_SERVER_BASEURL}/hospitals`, setter: setHospitalsList, name: 'hospitals' },
+        { url: `${import.meta.env.VITE_SERVER_BASEURL}/machines`, setter: setMachinesList, name: 'machines' },
+        { url: `${import.meta.env.VITE_SERVER_BASEURL}/therapies`, setter: setTherapiesList, name: 'therapies' }
     ]
 
     const fetchData = async () => {
@@ -29,7 +29,7 @@ export const DataProvider = ({ children }) => {
         } catch (err) {
             console.log(err)
 
-        }finally{
+        } finally {
             setLoading(false)
         }
 
@@ -48,7 +48,7 @@ export const DataProvider = ({ children }) => {
             hospitalsList, setHospitalsList,
             machinesList, setMachinesList,
             therapiesList, setTherapiesList,
-            reloadData,loading,setLoading
+            reloadData, loading, setLoading
         }}>
             {children}
         </DataContext.Provider>
