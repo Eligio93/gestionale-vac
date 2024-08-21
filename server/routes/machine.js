@@ -27,13 +27,13 @@ router.get('/', async (req, res, next) => {
 /*CREATE A NEW MACHINE*/
 router.post('/newMachine', async function (req, res) {
     try {
-        const existingMachine = await Machine.findOne({ serialNumber: req.body.serialNumber, motor: req.body.machineMotor })
+        const existingMachine = await Machine.findOne({ serialNumber: req.body.serialNumber.toUpperCase(), motor: req.body.machineMotor.toUpperCase() })
         if (existingMachine) {
             return res.status(400).json({ message: 'Questa macchina e gia stata registrata' })
         }
         const newMachine = new Machine({
-            motor: req.body.machineMotor,
-            serialNumber: req.body.serialNumber,
+            motor: req.body.machineMotor.toUpperCase(),
+            serialNumber: req.body.serialNumber.toUpperCase(),
             inUse: false
         })
         await newMachine.save();
