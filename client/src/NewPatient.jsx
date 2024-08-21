@@ -22,7 +22,7 @@ export default function NewPatient() {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:3001/patients/newPatient', data)
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_BASEURL}/patients/newPatient`, data)
             if (response.status == 200) {
                 setSuccess(response.data.message)
                 setTimeout(() => {

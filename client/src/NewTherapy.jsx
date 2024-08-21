@@ -137,7 +137,7 @@ export default function NewTherapy() {
         e.preventDefault();
         setLoading(true)
         try {
-            const response = await axios.post('http://localhost:3001/therapies/newTherapy', { data, destination })
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_BASEURL}/therapies/newTherapy`, { data, destination })
             if (response.status == 200) {
                 setSuccess(response.data.message)
                 setTimeout(() => {

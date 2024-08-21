@@ -18,7 +18,7 @@ export default function NewMachine() {
         e.preventDefault();
         setLoading(true)
         try {
-            const response = await axios.post('http://localhost:3001/machines/newMachine', data)
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_BASEURL}/machines/newMachine`, data)
             if (response.status == 200) {
                 setSuccess(response.data.message)
                 setTimeout(() => {

@@ -34,7 +34,7 @@ export default function TherapyToReturn({ therapy, machine, patient, hospital, s
     //function to confirm the edit process
     async function handleEditSave(therapyId) {
         try {
-            const response = await axios.put(`http://localhost:3001/therapies/edit/${therapyId}`, data)
+            const response = await axios.put(`${import.meta.env.VITE_SERVER_BASEURL}/therapies/edit/${therapyId}`, data)
             if (response.status == 200) {
 
 

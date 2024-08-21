@@ -16,7 +16,7 @@ export default function ReturnConfirmationPopUp(props) {
 
     async function handleReturn() {
         try {
-            const response = await axios.put('http://localhost:3001/machines/return', data)
+            const response = await axios.put(`${import.meta.env.VITE_SERVER_BASEURL}/machines/return`, data)
             console.log(response)
             if (response.status == 200) {
                 reloadData();
